@@ -1,12 +1,16 @@
 local xCent = display.contentCenterX
 local yCent = display.contentCenterY
 
--- hit scene ------------------------------------------------------------------
+local menuGroup = display.newGroup()
+
+local hitBtn = display.newRect( xCent, 400, 200, 50 )
+menuGroup:insert( hitBtn )
 
 local hitGroup = display.newGroup()
 
 local function hideHitScene( listener )
 	hitGroup.isVisible = false
+	menuGroup.isVisible = true
 end
 
 local zone = display.newCircle( xCent, yCent, 30 )
@@ -41,12 +45,11 @@ hitGroup:insert( ball1 )
 hitGroup:insert( ball2 )
 hitGroup.isVisible = false
 
-local function startHitScene()
+local function startHitScene( listener )
 	hitGroup.isVisible = true
 	transition.to( ball1, { time = 800, x = rnX, y = rnY } )
 	transition.to( ball2, { time = 800, x = rnX, y = rnY } )
 	timer.performWithDelay( 800, hit )
+	menuGroup.isVisible = false
 end
-
-startHitScene()
--------------------------------------------------------------------------------
+hitBtn:addEventListener( "touch", startHitScene )
